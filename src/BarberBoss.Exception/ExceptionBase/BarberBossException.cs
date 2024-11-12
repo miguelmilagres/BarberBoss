@@ -1,4 +1,4 @@
 ﻿namespace BarberBoss.Exception.ExceptionBase;
-public class BarberBoosException : SystemException
+public class BarberBossException : SystemException
 {
 }

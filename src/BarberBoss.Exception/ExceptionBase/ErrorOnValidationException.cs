@@ -1,5 +1,5 @@
 ﻿namespace BarberBoss.Exception.ExceptionBase;
-public class ErrorOnValidationException : BarberBoosException
+public class ErrorOnValidationException : BarberBossException
 {
     public List<string> Errors { get; set; }
 
