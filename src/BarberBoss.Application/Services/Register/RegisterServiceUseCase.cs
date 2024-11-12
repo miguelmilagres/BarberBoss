@@ -1,5 +1,6 @@
 ﻿using BarberBoss.Communication.Requests;
 using BarberBoss.Communication.Responses;
+using BarberBoss.Exception.ExceptionBase;
 
 namespace BarberBoss.Application.Services.Register
 {
@@ -22,7 +23,7 @@ namespace BarberBoss.Application.Services.Register
             {
                 var errorMessages = result.Errors.Select(f => f.ErrorMessage).ToList();
 
-                throw new ArgumentException();
+                throw new ErrorOnValidationException(errorMessages);
             }
         }
     }
