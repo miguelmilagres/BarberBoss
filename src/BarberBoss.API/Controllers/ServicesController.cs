@@ -7,5 +7,10 @@ namespace BarberBoss.API.Controllers
     [ApiController]
     public class ServicesController : ControllerBase
     {
+        [HttpPost]
+        public IActionResult Register([FromBody] RequestRegisterServiceJson request)
+        {
+            return Created();
+        }
     }
 }
