@@ -11,11 +11,22 @@ namespace BarberBoss.API.Controllers
         [HttpPost]
         public IActionResult Register([FromBody] RequestRegisterServiceJson request)
         {
-            var useCase = new RegisterServiceUseCase();
+            try
+            {
+                var useCase = new RegisterServiceUseCase();
 
-            var result = useCase.Execute(request);
+                var result = useCase.Execute(request);
 
-            return Created(string.Empty, result);
+                return Created(string.Empty, result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "unknown error");
+            }
         }
     }
 }
