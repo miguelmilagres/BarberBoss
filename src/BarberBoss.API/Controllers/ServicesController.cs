@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BarberBoss.Application.Services.Register;
+using BarberBoss.Communication.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BarberBoss.API.Controllers
@@ -10,7 +11,11 @@ namespace BarberBoss.API.Controllers
         [HttpPost]
         public IActionResult Register([FromBody] RequestRegisterServiceJson request)
         {
-            return Created();
+            var useCase = new RegisterServiceUseCase();
+
+            var result = useCase.Execute(request);
+
+            return Created(string.Empty, result);
         }
     }
 }
