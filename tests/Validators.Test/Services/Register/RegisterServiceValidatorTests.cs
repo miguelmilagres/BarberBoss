@@ -1,6 +1,5 @@
 ﻿using BarberBoss.Application.Services.Register;
-using BarberBoss.Communication.Enums;
-using BarberBoss.Communication.Requests;
+using CommonTestUtilities.Requests;
 
 namespace Validators.Test.Services.Register;
 public class RegisterServiceValidatorTests
@@ -9,14 +8,7 @@ public class RegisterServiceValidatorTests
     public void Success()
     {
         var validator = new RegisterServiceValidator();
-        var request = new RequestRegisterServiceJson
-        {
-            Title = "Test",
-            Date = DateTime.Now.AddDays(-1),
-            Comment = "Comment",
-            PaymentType = PaymentType.DebitCard,
-            Price = 177
-        };
+        var request = RequestRegisterServiceJsonBuilder.Build();
 
         var result = validator.Validate(request);
 
