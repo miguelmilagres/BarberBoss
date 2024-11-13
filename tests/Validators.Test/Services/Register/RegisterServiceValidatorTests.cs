@@ -1,5 +1,6 @@
 ﻿using BarberBoss.Application.Services.Register;
 using CommonTestUtilities.Requests;
+using FluentAssertions;
 
 namespace Validators.Test.Services.Register;
 public class RegisterServiceValidatorTests
@@ -12,6 +13,6 @@ public class RegisterServiceValidatorTests
 
         var result = validator.Validate(request);
 
-        Assert.True(result.IsValid);
+        result.IsValid.Should().BeTrue();
     }
 }
