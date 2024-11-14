@@ -5,9 +5,9 @@ using Bogus;
 namespace CommonTestUtilities.Requests;
 public class RequestRegisterServiceJsonBuilder
 {
-    public static RequestRegisterServiceJson Build()
+    public static RequestServiceJson Build()
     {
-        return new Faker<RequestRegisterServiceJson>()
+        return new Faker<RequestServiceJson>()
             .RuleFor(r => r.Title, faker => faker.Commerce.ProductName())
             .RuleFor(r => r.Comment, faker => faker.Commerce.ProductDescription())
             .RuleFor(r => r.Date, faker => faker.Date.Past())

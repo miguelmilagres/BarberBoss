@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BarberBoss.Infrastructure.DataAccess.Repositories
 {
-    internal class ServiceRepository : IServicesReadOnlyRepository, IServicesWriteOnlyRepository
+    internal class ServiceRepository : IServicesReadOnlyRepository, IServicesWriteOnlyRepository, IServicesUpdateOnlyRepository
     {
         private readonly BarberBossDbContext _dbContext;
 
@@ -33,9 +33,19 @@ namespace BarberBoss.Infrastructure.DataAccess.Repositories
             return await _dbContext.Services.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Service?> GetById(long id)
+        async Task<Service?> IServicesReadOnlyRepository.GetById(long id)
         {
             return await _dbContext.Services.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        }
+        
+        async Task<Service?> IServicesUpdateOnlyRepository.GetById(long id)
+        {
+            return await _dbContext.Services.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public void Update(Service service)
+        {
+            _dbContext.Services.Update(service);
         }
     }
 }

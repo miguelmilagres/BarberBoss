@@ -2,6 +2,7 @@
 using BarberBoss.Application.Services.GetAll;
 using BarberBoss.Application.Services.GetById;
 using BarberBoss.Application.Services.Register;
+using BarberBoss.Application.Services.Update;
 using BarberBoss.Communication.Requests;
 using BarberBoss.Communication.Responses;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace BarberBoss.API.Controllers
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register(
             [FromServices] IRegisterServiceUseCase useCase,
-            [FromBody] RequestRegisterServiceJson request)
+            [FromBody] RequestServiceJson request)
         {
             var response = await useCase.Execute(request);
 
@@ -61,6 +62,20 @@ namespace BarberBoss.API.Controllers
         {
             await useCase.Execute(id);
 
+            return NoContent();
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(
+        [FromServices] IUpdateServiceUseCase useCase,
+        [FromRoute] long id,
+        [FromBody] RequestServiceJson request)
+        {
+            await useCase.Execute(id, request);
             return NoContent();
         }
     }

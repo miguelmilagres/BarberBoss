@@ -2,7 +2,7 @@
 
 namespace BarberBoss.Communication.Requests
 {
-    public class RequestRegisterServiceJson
+    public class RequestServiceJson
     {
         public string Title { get; set; } = string.Empty;
         public string? Comment { get; set; }

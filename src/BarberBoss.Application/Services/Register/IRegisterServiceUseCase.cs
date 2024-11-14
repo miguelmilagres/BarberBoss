@@ -5,6 +5,6 @@ namespace BarberBoss.Application.Services.Register
 {
     public interface IRegisterServiceUseCase
     {
-        Task<ResponseRegisteredServiceJson> Execute(RequestRegisterServiceJson request);
+        Task<ResponseRegisteredServiceJson> Execute(RequestServiceJson request);
     }
 }

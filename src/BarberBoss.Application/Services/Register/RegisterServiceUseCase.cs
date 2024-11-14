@@ -19,7 +19,7 @@ namespace BarberBoss.Application.Services.Register
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<ResponseRegisteredServiceJson> Execute(RequestRegisterServiceJson request)
+        public async Task<ResponseRegisteredServiceJson> Execute(RequestServiceJson request)
         {
             Validate(request);
 
@@ -32,9 +32,9 @@ namespace BarberBoss.Application.Services.Register
             return _mapper.Map<ResponseRegisteredServiceJson>(entity);
         }
 
-        private void Validate(RequestRegisterServiceJson request)
+        private void Validate(RequestServiceJson request)
         {
-            var validator = new RegisterServiceValidator();
+            var validator = new ServiceValidator();
 
             var result = validator.Validate(request);
 
