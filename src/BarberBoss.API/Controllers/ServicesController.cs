@@ -11,6 +11,8 @@ namespace BarberBoss.API.Controllers
     public class ServicesController : ControllerBase
     {
         [HttpPost]
+        [ProducesResponseType(typeof(ResponseRegisteredServiceJson), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register(
             [FromServices] IRegisterServiceUseCase useCase,
             [FromBody] RequestRegisterServiceJson request)

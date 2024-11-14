@@ -1,4 +1,5 @@
-﻿using BarberBoss.Communication.Requests;
+﻿using AutoMapper;
+using BarberBoss.Communication.Requests;
 using BarberBoss.Communication.Responses;
 using BarberBoss.Domain.Entities;
 using BarberBoss.Domain.Repositories;
@@ -10,30 +11,25 @@ namespace BarberBoss.Application.Services.Register
     {
         private readonly IServicesRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public RegisterServiceUseCase(IServicesRepository repository, IUnitOfWork unitOfWork)
+        public RegisterServiceUseCase(IServicesRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
         public async Task<ResponseRegisteredServiceJson> Execute(RequestRegisterServiceJson request)
         {
             Validate(request);
 
-            var entity = new Service
-            {
-                Title = request.Title,
-                Comment = request.Comment,
-                Date = request.Date,
-                Price = request.Price,
-                PaymentType = (Domain.Enums.PaymentType)request.PaymentType
-            };
+            var entity = _mapper.Map<Service>(request);
 
             await _repository.Add(entity);
 
             await _unitOfWork.Commit();
 
-            return new ResponseRegisteredServiceJson();
+            return _mapper.Map<ResponseRegisteredServiceJson>(entity);
         }
 
         private void Validate(RequestRegisterServiceJson request)
