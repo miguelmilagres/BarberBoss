@@ -1,5 +1,6 @@
 ﻿using BarberBoss.Communication.Requests;
 using BarberBoss.Communication.Responses;
+using BarberBoss.Domain.Entities;
 using BarberBoss.Exception.ExceptionBase;
 
 namespace BarberBoss.Application.Services.Register
@@ -9,6 +10,15 @@ namespace BarberBoss.Application.Services.Register
         public ResponseRegisteredServiceJson Execute(RequestRegisterServiceJson request)
         {
             Validate(request);
+
+            var entity = new Service
+            {
+                Title = request.Title,
+                Comment = request.Comment,
+                Date = request.Date,
+                Price = request.Price,
+                PaymentType = (Domain.Enums.PaymentType)request.PaymentType
+            };
 
             return new ResponseRegisteredServiceJson();
         }
