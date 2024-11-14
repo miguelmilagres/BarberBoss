@@ -5,13 +5,17 @@ namespace BarberBoss.Infrastructure.DataAccess.Repositories
 {
     internal class ServiceRepository : IServicesRepository
     {
+        private readonly BarberBossDbContext _dbContext;
+
+        public ServiceRepository(BarberBossDbContext dbContext)
+        {
+            _dbContext = dbContext;    
+        }
         public void Add(Service service)
         {
-            var dbContext = new BarberBossDbContext();
+            _dbContext.Services.Add(service);
 
-            dbContext.Services.Add(service);
-
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
         }
     }
 }
