@@ -1,7 +1,7 @@
-﻿using BarberBoss.Application.Services.Register;
+﻿using BarberBoss.Application.Services.GetAll;
+using BarberBoss.Application.Services.Register;
 using BarberBoss.Communication.Requests;
 using BarberBoss.Communication.Responses;
-using BarberBoss.Exception.ExceptionBase;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BarberBoss.API.Controllers
@@ -20,6 +20,20 @@ namespace BarberBoss.API.Controllers
             var response = await useCase.Execute(request);
 
             return Created(string.Empty, response);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(ResponseServicesJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> GetAll(
+            [FromServices] IGetAllServiceUseCase useCase)
+        {
+            var response = await useCase.Execute();
+
+            if (response.Services.Count != 0)
+                return Ok(response);
+
+            return NoContent();
         }
     }
 }

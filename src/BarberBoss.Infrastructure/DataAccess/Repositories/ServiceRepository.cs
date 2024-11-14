@@ -1,5 +1,6 @@
 ﻿using BarberBoss.Domain.Entities;
 using BarberBoss.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace BarberBoss.Infrastructure.DataAccess.Repositories
 {
@@ -14,6 +15,11 @@ namespace BarberBoss.Infrastructure.DataAccess.Repositories
         public async Task Add(Service service)
         {
             await _dbContext.Services.AddAsync(service);
+        }
+
+        public async Task<List<Service>> GetAll()
+        {
+            return await _dbContext.Services.ToListAsync();
         }
     }
 }
