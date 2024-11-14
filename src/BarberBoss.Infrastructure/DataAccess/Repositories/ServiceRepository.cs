@@ -19,7 +19,7 @@ namespace BarberBoss.Infrastructure.DataAccess.Repositories
 
         public async Task<List<Service>> GetAll()
         {
-            return await _dbContext.Services.ToListAsync();
+            return await _dbContext.Services.AsNoTracking().ToListAsync();
         }
     }
 }
