@@ -14,8 +14,6 @@ namespace BarberBoss.Infrastructure.DataAccess.Repositories
         public void Add(Service service)
         {
             _dbContext.Services.Add(service);
-
-            _dbContext.SaveChanges();
         }
     }
 }

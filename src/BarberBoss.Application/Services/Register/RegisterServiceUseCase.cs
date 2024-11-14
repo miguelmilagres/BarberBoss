@@ -9,10 +9,12 @@ namespace BarberBoss.Application.Services.Register
     public class RegisterServiceUseCase : IRegisterServiceUseCase
     {
         private readonly IServicesRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RegisterServiceUseCase(IServicesRepository repository)
+        public RegisterServiceUseCase(IServicesRepository repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         public ResponseRegisteredServiceJson Execute(RequestRegisterServiceJson request)
         {
@@ -28,6 +30,8 @@ namespace BarberBoss.Application.Services.Register
             };
 
             _repository.Add(entity);
+
+            _unitOfWork.Commit();
 
             return new ResponseRegisteredServiceJson();
         }
