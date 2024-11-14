@@ -6,10 +6,10 @@ namespace BarberBoss.Application.Services.GetAll
 {
     public class GetAllServiceUseCase : IGetAllServiceUseCase
     {
-        private readonly IServicesRepository _repository;
+        private readonly IServicesReadOnlyRepository _repository;
         private readonly IMapper _mapper;
 
-        public GetAllServiceUseCase(IServicesRepository repository, IMapper mapper)
+        public GetAllServiceUseCase(IServicesReadOnlyRepository repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;

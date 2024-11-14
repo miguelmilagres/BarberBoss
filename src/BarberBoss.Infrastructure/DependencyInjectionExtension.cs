@@ -17,7 +17,8 @@ namespace BarberBoss.Infrastructure
 
         private static void AddRepositories(IServiceCollection services)
         {
-            services.AddScoped<IServicesRepository, ServiceRepository>();
+            services.AddScoped<IServicesReadOnlyRepository, ServiceRepository>();
+            services.AddScoped<IServicesWriteOnlyRepository, ServiceRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 

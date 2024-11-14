@@ -8,10 +8,10 @@ namespace BarberBoss.Application.Services.GetById
 {
     public class GetServiceByIdUseCase : IGetServiceByIdUseCase
     {
-        private readonly IServicesRepository _repository;
+        private readonly IServicesReadOnlyRepository _repository;
         private readonly IMapper _mapper;
 
-        public GetServiceByIdUseCase(IServicesRepository repository, IMapper mapper)
+        public GetServiceByIdUseCase(IServicesReadOnlyRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

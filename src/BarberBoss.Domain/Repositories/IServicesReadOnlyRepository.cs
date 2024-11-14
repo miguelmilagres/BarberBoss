@@ -2,9 +2,8 @@
 
 namespace BarberBoss.Domain.Repositories
 {
-    public interface IServicesRepository
+    public interface IServicesReadOnlyRepository
     {
-        Task Add(Service service);
         Task<List<Service>> GetAll();
         Task<Service?> GetById(long id);
     }

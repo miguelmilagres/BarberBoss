@@ -9,11 +9,11 @@ namespace BarberBoss.Application.Services.Register
 {
     public class RegisterServiceUseCase : IRegisterServiceUseCase
     {
-        private readonly IServicesRepository _repository;
+        private readonly IServicesWriteOnlyRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public RegisterServiceUseCase(IServicesRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+        public RegisterServiceUseCase(IServicesWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;

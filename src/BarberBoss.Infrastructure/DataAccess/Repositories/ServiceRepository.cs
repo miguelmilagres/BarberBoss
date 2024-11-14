@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BarberBoss.Infrastructure.DataAccess.Repositories
 {
-    internal class ServiceRepository : IServicesRepository
+    internal class ServiceRepository : IServicesReadOnlyRepository, IServicesWriteOnlyRepository
     {
         private readonly BarberBossDbContext _dbContext;
 
