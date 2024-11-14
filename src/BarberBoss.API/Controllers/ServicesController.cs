@@ -1,4 +1,5 @@
 ﻿using BarberBoss.Application.Services.GetAll;
+using BarberBoss.Application.Services.GetById;
 using BarberBoss.Application.Services.Register;
 using BarberBoss.Communication.Requests;
 using BarberBoss.Communication.Responses;
@@ -34,6 +35,19 @@ namespace BarberBoss.API.Controllers
                 return Ok(response);
 
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(ResponseServiceJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetById(
+            [FromServices] IGetServiceByIdUseCase useCase,
+            [FromRoute] long id)
+        {
+            var response = await useCase.Execute(id);
+
+            return Ok(response);
         }
     }
 }

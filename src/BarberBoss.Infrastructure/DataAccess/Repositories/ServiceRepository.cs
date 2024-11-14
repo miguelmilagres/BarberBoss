@@ -21,5 +21,10 @@ namespace BarberBoss.Infrastructure.DataAccess.Repositories
         {
             return await _dbContext.Services.AsNoTracking().ToListAsync();
         }
+
+        public async Task<Service?> GetById(long id)
+        {
+            return await _dbContext.Services.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }

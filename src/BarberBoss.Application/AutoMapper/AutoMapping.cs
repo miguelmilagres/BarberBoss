@@ -22,6 +22,7 @@ namespace BarberBoss.Application.AutoMapper
         {
             CreateMap<Service, ResponseRegisteredServiceJson>();
             CreateMap<Service, ResponseShortServiceJson>();
+            CreateMap<Service, ResponseServiceJson>();
         }
     }
 }

@@ -6,5 +6,6 @@ namespace BarberBoss.Domain.Repositories
     {
         Task Add(Service service);
         Task<List<Service>> GetAll();
+        Task<Service?> GetById(long id);
     }
 }
