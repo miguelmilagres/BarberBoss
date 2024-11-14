@@ -11,10 +11,10 @@ namespace BarberBoss.API.Controllers
     public class ServicesController : ControllerBase
     {
         [HttpPost]
-        public IActionResult Register([FromBody] RequestRegisterServiceJson request)
+        public IActionResult Register(
+            [FromServices] IRegisterServiceUseCase useCase,
+            [FromBody] RequestRegisterServiceJson request)
         {
-            var useCase = new RegisterServiceUseCase();
-
             var response = useCase.Execute(request);
 
             return Created(string.Empty, response);
