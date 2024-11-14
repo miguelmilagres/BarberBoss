@@ -126,6 +126,9 @@
   <data name="SERVICES_CANNOT_FOR_THE_FUTURE" xml:space="preserve">
     <value>Les services ne peuvent pas être pour l’avenir.</value>
   </data>
+  <data name="SERVICE_NOT_FOUND" xml:space="preserve">
+    <value>Le service n'est pas trouvé.</value>
+  </data>
   <data name="TITLE_REQUIRED" xml:space="preserve">
     <value>Le titre est obligatoire.</value>
   </data>

@@ -79,6 +79,15 @@ namespace BarberBoss.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Service not found..
+        /// </summary>
+        public static string SERVICE_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("SERVICE_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Services cannot be for the future..
         /// </summary>
         public static string SERVICES_CANNOT_FOR_THE_FUTURE {
