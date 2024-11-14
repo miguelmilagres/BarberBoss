@@ -17,6 +17,17 @@ namespace BarberBoss.Infrastructure.DataAccess.Repositories
             await _dbContext.Services.AddAsync(service);
         }
 
+        public async Task<bool> Delete(long id)
+        {
+            var result = await _dbContext.Services.FirstOrDefaultAsync(s => s.Id == id);
+
+            if (result is null)
+                return false;
+
+            _dbContext.Services.Remove(result);
+            return true;
+        }
+
         public async Task<List<Service>> GetAll()
         {
             return await _dbContext.Services.AsNoTracking().ToListAsync();

@@ -1,4 +1,5 @@
 ﻿using BarberBoss.Application.AutoMapper;
+using BarberBoss.Application.Services.Delete;
 using BarberBoss.Application.Services.GetAll;
 using BarberBoss.Application.Services.GetById;
 using BarberBoss.Application.Services.Register;
@@ -23,6 +24,7 @@ namespace BarberBoss.Application
             services.AddScoped<IRegisterServiceUseCase, RegisterServiceUseCase>();
             services.AddScoped<IGetAllServiceUseCase, GetAllServiceUseCase>();
             services.AddScoped<IGetServiceByIdUseCase, GetServiceByIdUseCase>();
+            services.AddScoped<IDeleteServiceUseCase, DeleteServiceUseCase>();
         }
     }
 }
