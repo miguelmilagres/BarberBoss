@@ -10,6 +10,6 @@ namespace BarberBoss.Infrastructure.DataAccess
         {
             _dbContext = dbContext;
         }
-        public void Commit() => _dbContext.SaveChanges();
+        public async Task Commit() => await _dbContext.SaveChangesAsync();
     }
 }

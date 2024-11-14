@@ -16,7 +16,7 @@ namespace BarberBoss.Application.Services.Register
             _repository = repository;
             _unitOfWork = unitOfWork;
         }
-        public ResponseRegisteredServiceJson Execute(RequestRegisterServiceJson request)
+        public async Task<ResponseRegisteredServiceJson> Execute(RequestRegisterServiceJson request)
         {
             Validate(request);
 
@@ -29,9 +29,9 @@ namespace BarberBoss.Application.Services.Register
                 PaymentType = (Domain.Enums.PaymentType)request.PaymentType
             };
 
-            _repository.Add(entity);
+            await _repository.Add(entity);
 
-            _unitOfWork.Commit();
+            await _unitOfWork.Commit();
 
             return new ResponseRegisteredServiceJson();
         }

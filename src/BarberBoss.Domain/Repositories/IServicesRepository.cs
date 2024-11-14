@@ -4,6 +4,6 @@ namespace BarberBoss.Domain.Repositories
 {
     public interface IServicesRepository
     {
-        void Add(Service service);
+        Task Add(Service service);
     }
 }

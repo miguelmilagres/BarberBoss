@@ -11,9 +11,9 @@ namespace BarberBoss.Infrastructure.DataAccess.Repositories
         {
             _dbContext = dbContext;    
         }
-        public void Add(Service service)
+        public async Task Add(Service service)
         {
-            _dbContext.Services.Add(service);
+            await _dbContext.Services.AddAsync(service);
         }
     }
 }
