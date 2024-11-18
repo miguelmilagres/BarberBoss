@@ -1,4 +1,4 @@
-﻿using BarberBoss.Application.Services.Register;
+﻿using BarberBoss.Application.Services;
 using BarberBoss.Communication.Enums;
 using BarberBoss.Exception;
 using CommonTestUtilities.Requests;
@@ -11,7 +11,7 @@ public class RegisterServiceValidatorTests
     public void Success()
     {
         //Arrange
-        var validator = new RegisterServiceValidator();
+        var validator = new ServiceValidator();
         var request = RequestRegisterServiceJsonBuilder.Build();
 
         //Act
@@ -28,7 +28,7 @@ public class RegisterServiceValidatorTests
     public void Error_Title_Empty(string title)
     {
         //Arrange
-        var validator = new RegisterServiceValidator();
+        var validator = new ServiceValidator();
         var request = RequestRegisterServiceJsonBuilder.Build();
         request.Title = string.Empty;
         request.Title = title;
@@ -44,7 +44,7 @@ public class RegisterServiceValidatorTests
     public void Error_Date_Future()
     {
         //Arrange
-        var validator = new RegisterServiceValidator();
+        var validator = new ServiceValidator();
         var request = RequestRegisterServiceJsonBuilder.Build();
         request.Date = DateTime.UtcNow.AddDays(1);
         //Act
@@ -57,7 +57,7 @@ public class RegisterServiceValidatorTests
     public void Error_Payment_Type_Invalid()
     {
         //Arrange
-        var validator = new RegisterServiceValidator();
+        var validator = new ServiceValidator();
         var request = RequestRegisterServiceJsonBuilder.Build();
         request.PaymentType = (PaymentType)700;
         //Act
@@ -74,7 +74,7 @@ public class RegisterServiceValidatorTests
     public void Error_Price_Invalid(decimal price)
     {
         //Arrange
-        var validator = new RegisterServiceValidator();
+        var validator = new ServiceValidator();
         var request = RequestRegisterServiceJsonBuilder.Build();
         request.Price = price;
         //Act
