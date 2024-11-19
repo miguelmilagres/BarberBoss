@@ -21,7 +21,7 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
         if (services.Count == 0)
             return [];
 
-        var workbook = new XLWorkbook();
+        using var workbook = new XLWorkbook();
 
         workbook.Author = "Miguel M. de Macedo";
         workbook.Style.Font.FontSize = 12;
