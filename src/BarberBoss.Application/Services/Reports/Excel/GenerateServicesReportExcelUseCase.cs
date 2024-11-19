@@ -5,12 +5,12 @@ using BarberBoss.Domain.Repositories;
 using ClosedXML.Excel;
 
 namespace BarberBoss.Application.Services.Reports.Excel;
-public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUseCase
+public class GenerateServicesReportExcelUseCase : IGenerateServicesReportExcelUseCase
 {
     private const string CURRENCY_SYMBOL = "R$";
     private readonly IServicesReadOnlyRepository _repository;
 
-    public GenerateExpensesReportExcelUseCase(IServicesReadOnlyRepository repository)
+    public GenerateServicesReportExcelUseCase(IServicesReadOnlyRepository repository)
     {
         _repository = repository;
     }
