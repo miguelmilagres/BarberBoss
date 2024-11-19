@@ -133,6 +133,15 @@ namespace BarberBoss.Domain.Reports {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Services for.
+        /// </summary>
+        public static string SERVICES_FOR {
+            get {
+                return ResourceManager.GetString("SERVICES_FOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string TITLE {

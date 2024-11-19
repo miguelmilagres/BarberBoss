@@ -141,6 +141,9 @@
   <data name="PRICE" xml:space="preserve">
     <value>Price</value>
   </data>
+  <data name="SERVICES_FOR" xml:space="preserve">
+    <value>Services for</value>
+  </data>
   <data name="TITLE" xml:space="preserve">
     <value>Title</value>
   </data>
