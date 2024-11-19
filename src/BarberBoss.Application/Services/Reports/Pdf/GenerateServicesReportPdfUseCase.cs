@@ -4,6 +4,7 @@ using BarberBoss.Domain.Repositories;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
 using PdfSharp.Fonts;
+using System.Reflection;
 
 namespace BarberBoss.Application.Services.Reports.Pdf;
 public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCase
@@ -26,26 +27,10 @@ public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCas
         var document = CreateDocument(month);
         var page = CreatePage(document);
 
-        var table = page.AddTable();
-        table.AddColumn();
-        table.AddColumn();
-
-        var row = table.AddRow();
-        row.Cells[0].AddImage(@"C:\Users\emrma\Downloads\profile-photo.jpg");
-
-        row.Cells[1].AddParagraph("Barber Boss");
-        row.Cells[1].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
-        row.Cells[1].VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
-
-        var paragraph = page.AddParagraph();
-        var title = string.Format(ResourceReportGenerationMessages.TOTAL_GAIN_IN, month.ToString("Y"));
-
-        paragraph.AddFormattedText(title, new Font { Name = FontHelper.RALEWAY_REGULAR, Size = 15 });
-
-        paragraph.AddLineBreak();
+        CreateHeaderWithProfilePhotoAndName(page);
 
         var totalServices = services.Sum(service => service.Price);
-        paragraph.AddFormattedText($"{CURRENCY_SYMBOL} {totalServices}", new Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
+        CreateTotalGainSection(page, month, totalServices);
 
         return RenderDocument(document);
     }
@@ -91,5 +76,39 @@ public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCas
         renderer.PdfDocument.Save(file);
 
         return file.ToArray();
+    }
+
+    private void CreateHeaderWithProfilePhotoAndName(Section page)
+    {
+        var table = page.AddTable();
+        table.AddColumn();
+        table.AddColumn("300");
+
+        var row = table.AddRow();
+
+        var assembly = Assembly.GetExecutingAssembly();
+        var directoryName = Path.GetDirectoryName(assembly.Location);
+        var pathFile = Path.Combine(directoryName!, "Logo", "profile-photo.png");
+
+        row.Cells[0].AddImage(pathFile);
+
+        row.Cells[1].AddParagraph("Barber Boss");
+        row.Cells[1].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
+        row.Cells[1].VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
+    }
+
+    private void CreateTotalGainSection(Section page, DateOnly month, decimal totalServices)
+    {
+        var paragraph = page.AddParagraph();
+        paragraph.Format.SpaceBefore = "40";
+        paragraph.Format.SpaceAfter = "40";
+
+        var title = string.Format(ResourceReportGenerationMessages.TOTAL_GAIN_IN, month.ToString("Y"));
+
+        paragraph.AddFormattedText(title, new Font { Name = FontHelper.RALEWAY_REGULAR, Size = 15 });
+
+        paragraph.AddLineBreak();
+        
+        paragraph.AddFormattedText($"{CURRENCY_SYMBOL} {totalServices}", new Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
     }
 }
