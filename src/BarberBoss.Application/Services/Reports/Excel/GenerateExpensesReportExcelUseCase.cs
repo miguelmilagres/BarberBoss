@@ -1,7 +1,8 @@
-﻿using BarberBoss.Domain.Reports;
+﻿using BarberBoss.Domain.Entities;
+using BarberBoss.Domain.Enums;
+using BarberBoss.Domain.Reports;
 using BarberBoss.Domain.Repositories;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace BarberBoss.Application.Services.Reports.Excel;
 public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUseCase
@@ -29,6 +30,18 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
 
         InsertHeader(worksheet);
 
+        int raw = 2;
+        foreach (Service service in services)
+        {
+            worksheet.Cell($"A{raw}").Value = service.Title;
+            worksheet.Cell($"B{raw}").Value = service.Date;
+            worksheet.Cell($"C{raw}").Value = ConvertPaymentType(service.PaymentType);
+            worksheet.Cell($"D{raw}").Value = service.Price;
+            worksheet.Cell($"E{raw}").Value = service.Comment;
+
+            raw++;
+        }
+
         var file = new MemoryStream();
         workbook.SaveAs(file);
 
@@ -53,5 +66,17 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
         worksheet.Cells("C1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
         worksheet.Cells("E1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
         worksheet.Cells("D1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+    }
+
+    private string ConvertPaymentType(PaymentType paymentType)
+    {
+        return paymentType switch
+        {
+            PaymentType.Cash => "Cash",
+            PaymentType.CreditCard => "Credit Card",
+            PaymentType.DebitCard => "Debit Card",
+            PaymentType.EletronicTransfer => "EletronicTransfer",
+            _ => string.Empty
+        };
     }
 }
