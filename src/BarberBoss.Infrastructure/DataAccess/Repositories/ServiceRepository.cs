@@ -47,5 +47,20 @@ namespace BarberBoss.Infrastructure.DataAccess.Repositories
         {
             _dbContext.Services.Update(service);
         }
+
+        public async Task<List<Service>> FilterByMonth(DateOnly date)
+        {
+            var startDate = new DateTime(year: date.Year, month: date.Month, day: 1).Date;
+            var daysInMonth = DateTime.DaysInMonth(year: date.Year, month: date.Month);
+            var endDate = new DateTime(year: date.Year, month: date.Month, day: daysInMonth, hour: 23, minute: 59, second: 59);
+
+            return await _dbContext
+                .Services
+                .AsNoTracking()
+                .Where(service => service.Date >= startDate && service.Date <= endDate)
+                .OrderBy(service => service.Date)
+                .ThenBy(service => service.Title)
+                .ToListAsync();
+        }
     }
 }

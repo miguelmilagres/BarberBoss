@@ -1,11 +1,24 @@
 ﻿using BarberBoss.Domain.Reports;
+using BarberBoss.Domain.Repositories;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace BarberBoss.Application.Services.Reports.Excel;
 public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUseCase
 {
+    private readonly IServicesReadOnlyRepository _repository;
+
+    public GenerateExpensesReportExcelUseCase(IServicesReadOnlyRepository repository)
+    {
+        _repository = repository;
+    }
     public async Task<byte[]> Execute(DateOnly month)
     {
+        var services = await _repository.FilterByMonth(month);
+
+        if (services.Count == 0)
+            return [];
+
         var workbook = new XLWorkbook();
 
         workbook.Author = "Miguel M. de Macedo";
@@ -32,7 +45,8 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
 
         worksheet.Cells("A1:E1").Style.Font.Bold = true;
 
-        worksheet.Cells("A1:E").Style.Fill.BackgroundColor = XLColor.FromHtml("#205858");
+        worksheet.Cells("A1:E1").Style.Fill.BackgroundColor = XLColor.FromHtml("#205858");
+        worksheet.Cells("A1:E1").Style.Font.FontColor = XLColor.White;
 
         worksheet.Cells("A1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
         worksheet.Cells("B1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
