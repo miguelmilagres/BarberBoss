@@ -1,9 +1,11 @@
-﻿using BarberBoss.Application.Services.Reports.Pdf.Fonts;
+﻿using BarberBoss.Application.Services.Reports.Pdf.Colors;
+using BarberBoss.Application.Services.Reports.Pdf.Fonts;
 using BarberBoss.Domain.Reports;
 using BarberBoss.Domain.Repositories;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
+using PdfSharp.Drawing;
 using PdfSharp.Fonts;
 using System.Reflection;
 
@@ -36,6 +38,22 @@ public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCas
         foreach (var service in services)
         {
             var table = CreateServiceTable(page);
+
+            var row = table.AddRow();
+            row.Height = 25;
+            row.Cells[0].AddParagraph(service.Title);
+            row.Cells[0].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorsHelper.BLACK };
+            row.Cells[0].Shading.Color = ColorsHelper.GREEN_LIGHT;
+            row.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+            row.Cells[0].MergeRight = 2;
+            row.Cells[0].Format.LeftIndent = 20;
+            row.Cells[3].AddParagraph(ResourceReportGenerationMessages.PRICE);
+            row.Cells[3].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorsHelper.WHITE };
+            row.Cells[3].Shading.Color = ColorsHelper.GREEN_DARK;
+            row.Cells[3].VerticalAlignment = VerticalAlignment.Center;
+            row = table.AddRow();
+            row.Height = 30;
+            row.Borders.Visible = false;
         }
 
         return RenderDocument(document);
