@@ -1,5 +1,7 @@
 ﻿
+using BarberBoss.Application.Services.Reports.Pdf.Fonts;
 using BarberBoss.Domain.Repositories;
+using PdfSharp.Fonts;
 
 namespace BarberBoss.Application.Services.Reports.Pdf;
 public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCase
@@ -10,6 +12,8 @@ public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCas
     public GenerateServicesReportPdfUseCase(IServicesReadOnlyRepository repository)
     {
         _repository = repository;
+
+        GlobalFontSettings.FontResolver = new ServicesReportFontResolver();
     }
     public async Task<byte[]> Execute(DateOnly month)
     {
