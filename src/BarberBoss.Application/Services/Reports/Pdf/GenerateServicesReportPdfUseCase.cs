@@ -8,6 +8,7 @@ using MigraDoc.Rendering;
 using PdfSharp.Fonts;
 using System.Reflection;
 using BarberBoss.Domain.Extensions;
+using PdfSharp.Drawing;
 
 namespace BarberBoss.Application.Services.Reports.Pdf;
 public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCase
@@ -58,6 +59,19 @@ public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCas
             SetStyleBaseForServiceInformation(row.Cells[2]);
 
             AddPriceForService(row.Cells[3], service.Price);
+
+            if (string.IsNullOrWhiteSpace(service.Comment) == false)
+            {
+                var descriptionRow = table.AddRow();
+                descriptionRow.Height = HEIGHT_ROW_SERVICE_TABLE;
+                descriptionRow.Cells[0].AddParagraph(service.Comment);
+                descriptionRow.Cells[0].Format.Font = new Font { Name = FontHelper.WORKSANS_REGULAR, Size = 10, Color = ColorsHelper.BLACK };
+                descriptionRow.Cells[0].Shading.Color = ColorsHelper.GRAY_LIGHT;
+                descriptionRow.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+                descriptionRow.Cells[0].MergeRight = 2;
+                descriptionRow.Cells[0].Format.LeftIndent = 20;
+                row.Cells[3].MergeDown = 1;
+            }
 
             AddWhiteSpace(table);
         }
