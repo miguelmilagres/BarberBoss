@@ -2,6 +2,7 @@
 using BarberBoss.Domain.Reports;
 using BarberBoss.Domain.Repositories;
 using MigraDoc.DocumentObjectModel;
+using MigraDoc.Rendering;
 using PdfSharp.Fonts;
 
 namespace BarberBoss.Application.Services.Reports.Pdf;
@@ -35,7 +36,7 @@ public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCas
         var totalServices = services.Sum(service => service.Price);
         paragraph.AddFormattedText($"{CURRENCY_SYMBOL} {totalServices}", new Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
 
-        return [];
+        return RenderDocument(document);
     }
 
     private Document CreateDocument(DateOnly month)
@@ -64,5 +65,20 @@ public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCas
         section.PageSetup.BottomMargin = 80;
 
         return section;
+    }
+
+    private byte[] RenderDocument(Document document)
+    {
+        var renderer = new PdfDocumentRenderer
+        {
+            Document = document,
+        };
+
+        renderer.RenderDocument();
+
+        using var file = new MemoryStream();
+        renderer.PdfDocument.Save(file);
+
+        return file.ToArray();
     }
 }
