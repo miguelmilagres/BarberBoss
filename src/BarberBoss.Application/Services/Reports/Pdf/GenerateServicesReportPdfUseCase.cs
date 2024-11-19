@@ -2,6 +2,7 @@
 using BarberBoss.Domain.Reports;
 using BarberBoss.Domain.Repositories;
 using MigraDoc.DocumentObjectModel;
+using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 using PdfSharp.Fonts;
 using System.Reflection;
@@ -31,6 +32,11 @@ public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCas
 
         var totalServices = services.Sum(service => service.Price);
         CreateTotalGainSection(page, month, totalServices);
+
+        foreach (var service in services)
+        {
+            var table = CreateServiceTable(page);
+        }
 
         return RenderDocument(document);
     }
@@ -63,20 +69,6 @@ public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCas
         return section;
     }
 
-    private byte[] RenderDocument(Document document)
-    {
-        var renderer = new PdfDocumentRenderer
-        {
-            Document = document,
-        };
-
-        renderer.RenderDocument();
-
-        using var file = new MemoryStream();
-        renderer.PdfDocument.Save(file);
-
-        return file.ToArray();
-    }
 
     private void CreateHeaderWithProfilePhotoAndName(Section page)
     {
@@ -110,5 +102,29 @@ public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCas
         paragraph.AddLineBreak();
         
         paragraph.AddFormattedText($"{CURRENCY_SYMBOL} {totalServices}", new Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
+    }
+
+    private Table CreateServiceTable(Section page)
+    {
+        var table = page.AddTable();
+        table.AddColumn("195").Format.Alignment = ParagraphAlignment.Left;
+        table.AddColumn("80").Format.Alignment = ParagraphAlignment.Center;
+        table.AddColumn("120").Format.Alignment = ParagraphAlignment.Center;
+        table.AddColumn("120").Format.Alignment = ParagraphAlignment.Right;
+        return table;
+    }
+    private byte[] RenderDocument(Document document)
+    {
+        var renderer = new PdfDocumentRenderer
+        {
+            Document = document,
+        };
+
+        renderer.RenderDocument();
+
+        using var file = new MemoryStream();
+        renderer.PdfDocument.Save(file);
+
+        return file.ToArray();
     }
 }
