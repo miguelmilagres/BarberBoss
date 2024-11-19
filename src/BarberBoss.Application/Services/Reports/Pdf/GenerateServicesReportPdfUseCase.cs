@@ -26,6 +26,17 @@ public class GenerateServicesReportPdfUseCase : IGenerateServicesReportPdfUseCas
         var document = CreateDocument(month);
         var page = CreatePage(document);
 
+        var table = page.AddTable();
+        table.AddColumn();
+        table.AddColumn();
+
+        var row = table.AddRow();
+        row.Cells[0].AddImage(@"C:\Users\emrma\Downloads\profile-photo.jpg");
+
+        row.Cells[1].AddParagraph("Barber Boss");
+        row.Cells[1].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
+        row.Cells[1].VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
+
         var paragraph = page.AddParagraph();
         var title = string.Format(ResourceReportGenerationMessages.TOTAL_GAIN_IN, month.ToString("Y"));
 
