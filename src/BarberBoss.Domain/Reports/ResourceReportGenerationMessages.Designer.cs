@@ -149,5 +149,14 @@ namespace BarberBoss.Domain.Reports {
                 return ResourceManager.GetString("TITLE", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total won in {0}.
+        /// </summary>
+        public static string TOTAL_GAIN_IN {
+            get {
+                return ResourceManager.GetString("TOTAL_GAIN_IN", resourceCulture);
+            }
+        }
     }
 }
