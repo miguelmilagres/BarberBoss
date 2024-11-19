@@ -7,6 +7,7 @@ using ClosedXML.Excel;
 namespace BarberBoss.Application.Services.Reports.Excel;
 public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUseCase
 {
+    private const string CURRENCY_SYMBOL = "R$";
     private readonly IServicesReadOnlyRepository _repository;
 
     public GenerateExpensesReportExcelUseCase(IServicesReadOnlyRepository repository)
@@ -37,10 +38,13 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
             worksheet.Cell($"B{raw}").Value = service.Date;
             worksheet.Cell($"C{raw}").Value = ConvertPaymentType(service.PaymentType);
             worksheet.Cell($"D{raw}").Value = service.Price;
+            worksheet.Cell($"D{raw}").Style.NumberFormat.Format = $"{CURRENCY_SYMBOL} #,##0.00";
             worksheet.Cell($"E{raw}").Value = service.Comment;
 
             raw++;
         }
+
+        worksheet.Columns().AdjustToContents();
 
         var file = new MemoryStream();
         workbook.SaveAs(file);
