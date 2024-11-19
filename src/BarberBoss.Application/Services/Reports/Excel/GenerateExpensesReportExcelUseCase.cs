@@ -76,10 +76,10 @@ public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUs
     {
         return paymentType switch
         {
-            PaymentType.Cash => "Cash",
-            PaymentType.CreditCard => "Credit Card",
-            PaymentType.DebitCard => "Debit Card",
-            PaymentType.EletronicTransfer => "EletronicTransfer",
+            PaymentType.Cash => ResourceReportGenerationMessages.CASH,
+            PaymentType.CreditCard => ResourceReportGenerationMessages.CREDIT_CARD,
+            PaymentType.DebitCard => ResourceReportGenerationMessages.DEBIT_CARD,
+            PaymentType.EletronicTransfer => ResourceReportGenerationMessages.ELETRONIC_TRANSFER,
             _ => string.Empty
         };
     }
